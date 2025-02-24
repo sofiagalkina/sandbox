@@ -1,40 +1,48 @@
-/* Maps
-function solution(scores){
+// target insert button 
+document.getElementById('addPizza').addEventListener('click', function () {
 
-    let frequency = new Map()
+
+    let pizzaForm = document.getElementById('pizzaForm');
+    let newPizza = document.createElement("div");
+    newPizza.classList.add("pizza");
+    newPizza.innerHTML = `
+    <label>Size (in inches): <input type="number" class="size" value="12"></label>
+            <label>Price ($): <input type="number" class="price" value="10"></label>
     
-    for (const score of scores){
-        frequency.set(score, (frequency.get(score) || 0) +1)
+    `;
+
+    getPrices();
+    getSizes();
+    pizzaForm.appendChild(newPizza);
+    calcBest()
+
+})
+
+function getPrices() {
+const newDiv = document.createElement("span");
+
+let prices = document.querySelectorAll(".price");
+
+
+newDiv.textContent = "Prices: " + [...prices].map(price => price.value).join(", ");
+pizzaForm.appendChild(newDiv);
+}
+
+
+function getSizes() {
+    const newDiv2 = document.createElement("span");
+    
+    let sizes = document.querySelectorAll(".size");
+  
+    newDiv2.textContent = " Sizes: " + [...sizes].map(size => size.value).join(" ,");
+
+    pizzaForm.appendChild(newDiv2)
     }
-    
-     return scores.filter(score => frequency.get(score) === 1).sort((a, b) => b - a)
-    
-    
+
+
+    function calcBest(prices, sizes){
+
+     
+
+
     }
-    
-    
-    console.log(solution([100, 90, 90, 80, 70, 70, 60]))
-    */
-
-    // queues and stuff
-    function solution(heights, k){
-        let queue = [[0, 0]] // start w index 0 and 0 jumps
-        let visited = new Set();
-
-        while(queue > 0){
-            let [currentIndex, jumps ] = queue.shift();
-            if(currentIndex == heights.length - 1){
-                return jumps;
-            }
-            for(let nextIndex = currentIndex + 1; nextIndex < heights.length; nextIndex++){
-                if(Math.abs(heights[currentIndex] - heights[nextIndex]) <= k &&
-            !visited.has(nextIndex)){
-                queue.push([nextIndex, jumps + 1]);
-                visited.add(nextIndex);
-            }
-            }
-        }
-        return -1
-    }
-
-    console.log(solution([1, 3, 2, 6, 4, 5], 2))
